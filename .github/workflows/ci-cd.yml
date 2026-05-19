@@ -45,7 +45,7 @@ jobs:
 
     steps:
     - name: Baixar o código do repositório
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Fazer Deploy via SSH no Servidor de Produção
       uses: appleboy/ssh-action@v1.0.3
@@ -55,7 +55,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.SSH_PORT }}
         script: |
-          cd /var/www/meu-app-auth
+          cd /var/www/php-auth-app
           
           # Atualiza o código com a versão mais recente da main
           git pull origin main
