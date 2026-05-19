@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Hybridauth\\' => array($vendorDir . '/hybridauth/hybridauth/src'),
+    'Auth\\' => array($baseDir . '/src'),
 );

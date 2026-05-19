@@ -11,12 +11,20 @@ class ComposerStaticInit66501ca8fa27c2f60c8a58c36c7c5686
         array (
             'Hybridauth\\' => 11,
         ),
+        'A' =>
+        array (
+            'Auth\\' => 5,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
         'Hybridauth\\' =>
         array (
             0 => __DIR__ . '/..' . '/hybridauth/hybridauth/src',
+        ),
+        'Auth\\' =>
+        array (
+            0 => __DIR__ . '/../..' . '/src',
         ),
     );
 
