@@ -15,7 +15,7 @@ jobs:
 
     steps:
     - name: Baixar o código do repositório
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Configurar o ambiente PHP 8.3
       uses: shivammathur/setup-php@v2
