@@ -11,12 +11,9 @@ if (isset($_SESSION['usuario_logado'])) {
 
 // Certifique-se de que o autoload do composer está mapeando os arquivos
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../src/Config.php';
-
-use Auth\Config;
 
 // Carrega as configurações dos provedores ativos
-$config = Config::getHybridauthConfig();
+$config = require __DIR__ . '/../config/app.php';
 $providers = $config['providers'] ?? [];
 ?>
 <!DOCTYPE html>
