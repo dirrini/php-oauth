@@ -1,5 +1,13 @@
 {
+    "name": "diego/php-oauth-auth",
+    "description": "Sistema de autenticação integrado com Google e Facebook usando Hybridauth",
+    "license": "proprietary",
     "require": {
         "hybridauth/hybridauth": "^3.13"
+    },
+    "autoload": {
+        "psr-4": {
+            "Auth\\": "src/"
+        }
     }
 }

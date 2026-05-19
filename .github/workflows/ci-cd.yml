@@ -25,7 +25,7 @@ jobs:
         coverage: none
 
     - name: Validar sintaxe do arquivo composer.json
-      run: composer validate
+      run: composer validate --strict
 
     - name: Instalar Dependências do Composer (Hybridauth, etc)
       run: composer install --prefer-dist --no-progress --no-suggest
