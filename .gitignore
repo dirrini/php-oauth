@@ -1,0 +1,24 @@
+# Arquivos de ambiente e chaves secretas (CRÍTICO)
+.env
+
+# Pastas e arquivos locais do Docker
+.docker/
+mysql_data/
+
+# Uploads locais de avatares (Mantém a pasta, mas ignora as imagens geradas)
+public/assets/avatars/*
+!public/assets/avatars/default.png
+!public/assets/avatars/.gitkeep
+
+# IDEs e editores de código
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Arquivos de sistema operacional
+.DS_Store
+Thumbs.db

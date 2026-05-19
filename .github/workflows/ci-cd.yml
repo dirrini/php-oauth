@@ -1,0 +1,67 @@
+name: Pipeline CI/CD - PHP Google & Facebook Auth
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  # ==========================================
+  # ETAPA DE CI: Integração Contínua (Testes)
+  # ==========================================
+  continuous-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Baixar o código do repositório
+      uses: actions/checkout@v4
+
+    - name: Configurar o ambiente PHP 8.3
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        extensions: pdo, pdo_mysql, curl
+        coverage: none
+
+    - name: Validar sintaxe do arquivo composer.json
+      run: composer validate --strict
+
+    - name: Instalar Dependências do Composer (Hybridauth, etc)
+      run: composer install --prefer-dist --no-progress --no-suggest
+
+    - name: Verificar erros de sintaxe no PHP (Linter)
+      run: |
+        echo "Verificando arquivos PHP..."
+        find src/ public/ config/ -type f -name "*.php" -print0 | xargs -0 -n1 php -l
+
+  # ==========================================
+  # ETAPA DE CD: Entrega Contínua (Deploy)
+  # ==========================================
+  continuous-deployment:
+    needs: continuous-integration # Só roda se a etapa de CI passar com sucesso
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' # Só roda se for um push na branch main
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Baixar o código do repositório
+      uses: actions/checkout@v4
+
+    - name: Fazer Deploy via SSH no Servidor de Produção
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          cd /var/www/meu-app-auth
+          
+          # Atualiza o código com a versão mais recente da main
+          git pull origin main
+          
+          # Instala as dependências de produção (otimizadas)
+          composer install --no-dev --optimize-autoloader
+          
+          # Reinicia os contêineres do Docker em produção para aplicar mudanças (se houver)
+          docker-compose down && docker-compose up -d --build
